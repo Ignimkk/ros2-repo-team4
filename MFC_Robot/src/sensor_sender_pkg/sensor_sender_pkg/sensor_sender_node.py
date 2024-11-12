@@ -27,7 +27,8 @@ class SensorSender(Node):
             Image,
             '/camera/image_raw',
             self.image_callback,
-            10)
+            qos_profile
+            )
         
         self.lidar_subscription = self.create_subscription(
             LaserScan,

@@ -25,6 +25,7 @@ setup(
         'console_scripts': [
             'sensor_sender = sensor_sender_pkg.sensor_sender:main',
             'sensor_sender2 = sensor_sender_pkg.sensor_sender_node:main',
+            'camera_publisher = sensor_sender_pkg.camera_publisher:main', 
         ],
     },
 )

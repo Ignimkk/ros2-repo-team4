@@ -98,23 +98,23 @@ def generate_launch_description():
                                 namespace='/',
                                 )
 
-    v4l2_camera_params_file = os.path.join(
-        get_package_share_directory('minibot_bringup'), 'config', 'v4l2_camera_params.yaml'
-    )
-    v4l2_camera_node = Node(
-        package='v4l2_camera',
-        executable='v4l2_camera_node',
-        name='v4l2_camera_node',
-        output='screen',
-        parameters=[
-            v4l2_camera_params_file,
-            {"image_size": [640, 480]}
-        ],
-        remappings=[
-            ('/image_raw', '/camera/image_raw'),
-            ('/camera_info', '/camera/camera_info')
-        ]
-    )
+    # v4l2_camera_params_file = os.path.join(
+    #     get_package_share_directory('minibot_bringup'), 'config', 'v4l2_camera_params.yaml'
+    # )
+    # v4l2_camera_node = Node(
+    #     package='v4l2_camera',
+    #     executable='v4l2_camera_node',
+    #     name='v4l2_camera_node',
+    #     output='screen',
+    #     parameters=[
+    #         v4l2_camera_params_file,
+    #         {"image_size": [640, 480]}
+    #     ],
+    #     remappings=[
+    #         ('/image_raw', '/camera/image_raw'),
+    #         ('/camera_info', '/camera/camera_info')
+    #     ]
+    # )
 
     return LaunchDescription([
         LogInfo(msg="Starting control_node..."),
@@ -136,7 +136,7 @@ def generate_launch_description():
                 on_exit=[load_minibot_io_controller],
             )
         ),
-        LogInfo(msg="Starting v4l2_camera_node..."),
+        LogInfo(msg="Starting"),
         prefix,
         lidar_model,
         lidar_port_name,
@@ -147,5 +147,5 @@ def generate_launch_description():
         control_node,
         ydlidar_params_declare,
         ydlidar_driver_node,
-        v4l2_camera_node,
+        # v4l2_camera_node,
     ])

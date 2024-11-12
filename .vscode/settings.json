@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "/home/minras/final_project/ros-repo-4/MFC_Robot/src/minibot_bringup"
+    "cmake.sourceDirectory": "/home/minras/final_project/ros-repo-4/MFC_Robot/src/minibot_bringup",
+    "ros.distro": "humble"
 }

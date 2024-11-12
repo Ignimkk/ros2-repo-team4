@@ -1,6 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
+from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
 from geometry_msgs.msg import Twist
 from std_msgs.msg import String
 from cv_bridge import CvBridge
@@ -37,7 +38,6 @@ class ArucoCmdVelPublisher(Node):
             # cmd_vel 퍼블리셔
             self.cmd_vel_publisher = self.create_publisher(Twist, 'base_controller/cmd_vel_unstamped', 10)
 
-            # result_topic을 subscribe
             self.result_subscription = self.create_subscription(
                 String,
                 'robo_1/robot_state',
@@ -56,6 +56,11 @@ class ArucoCmdVelPublisher(Node):
     def result_callback(self, msg):
         self.result_state = msg.data
         self.get_logger().info(f'Result state updated to: {self.result_state}')
+        qos_profile = QoSProfile(
+            reliability=ReliabilityPolicy.BEST_EFFORT,
+            durability=DurabilityPolicy.VOLATILE,
+            depth=10
+        )
         
         # 상태가 ADJUSTING일 때만 이미지를 구독
         if self.result_state == "ADJUSTING":
@@ -63,7 +68,7 @@ class ArucoCmdVelPublisher(Node):
                 Image,
                 '/camera/image_raw',
                 self.image_callback,
-                10
+                qos_profile
             )
         else:
             if hasattr(self, 'image_subscription'):
